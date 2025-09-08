@@ -99,12 +99,12 @@ export const MAIN_TOOLBAR_BUTTONS_PRIORITY = [
     'tileview',
     'overflowmenu',
     'hangup',
-    'invite',
+    // 'invite',
     'toggle-camera',
     'videoquality',
     'fullscreen',
     'security',
-    'closedcaptions',
+    // 'closedcaptions',
     'recording',
     'livestreaming',
     'linktosalesforce',
@@ -121,7 +121,7 @@ export const MAIN_TOOLBAR_BUTTONS_PRIORITY = [
     'embedmeeting',
     'feedback',
     'download',
-    'help'
+    // 'help'
 ];
 
 export const TOOLBAR_TIMEOUT = 4000;

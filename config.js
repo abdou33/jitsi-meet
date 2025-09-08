@@ -705,7 +705,7 @@ var config = {
     // DEPRECATED! Use 'welcomePage.disabled' instead.
     // Whether to use a welcome page or not. In case it's false a random room
     // will be joined when no room is specified.
-    // enableWelcomePage: true,
+    enableWelcomePage: false,
 
     // Configs for welcome page.
     // welcomePage: {
@@ -789,21 +789,21 @@ var config = {
     // googleApiApplicationClientID: '<client_id>',
 
     // Configs for prejoin page.
-    // prejoinConfig: {
-    //     // When 'true', it shows an intermediate page before joining, where the user can configure their devices.
-    //     enabled: true,
-    //     // Hides the participant name editing field in the prejoin screen.
-    //     // If requireDisplayName is also set as true, a name should still be provided through
-    //     // either the jwt or the userInfo from the iframe api init object in order for this to have an effect.
-    //     hideDisplayName: false,
-    //     // List of buttons to hide from the extra join options dropdown.
-    //     hideExtraJoinButtons: ['no-audio', 'by-phone'],
-    //     // Configuration for pre-call test
-    //     // By setting preCallTestEnabled, you enable the pre-call test in the prejoin page.
-    //     // ICE server credentials need to be provided over the preCallTestICEUrl
-    //     preCallTestEnabled: false,
-    //     preCallTestICEUrl: ''
-    // },
+    prejoinConfig: {
+        // When 'true', it shows an intermediate page before joining, where the user can configure their devices.
+        enabled: false,
+        // Hides the participant name editing field in the prejoin screen.
+        // If requireDisplayName is also set as true, a name should still be provided through
+        // either the jwt or the userInfo from the iframe api init object in order for this to have an effect.
+        hideDisplayName: true,
+        // List of buttons to hide from the extra join options dropdown.
+        hideExtraJoinButtons: ['no-audio', 'by-phone'],
+        // Configuration for pre-call test
+        // By setting preCallTestEnabled, you enable the pre-call test in the prejoin page.
+        // ICE server credentials need to be provided over the preCallTestICEUrl
+        preCallTestEnabled: false,
+        preCallTestICEUrl: ''
+    },
 
     // When 'true', the user cannot edit the display name.
     // (Mainly useful when used in conjunction with the JWT so the JWT name becomes read only.)
@@ -850,41 +850,40 @@ var config = {
     // - it's possible to reorder the buttons in the maintoolbar by changing the order of the mainToolbarButtons
     // - 'desktop' controls the "Share your screen" button
     // - if `toolbarButtons` is undefined, we fallback to enabling all buttons on the UI
-    // toolbarButtons: [
-    //    'camera',
-    //    'chat',
-    //    'closedcaptions',
-    //    'desktop',
-    //    'download',
-    //    'embedmeeting',
-    //    'etherpad',
-    //    'feedback',
-    //    'filmstrip',
-    //    'fullscreen',
-    //    'hangup',
-    //    'help',
-    //    'highlight',
-    //    'invite',
-    //    'linktosalesforce',
-    //    'livestreaming',
-    //    'microphone',
-    //    'noisesuppression',
-    //    'participants-pane',
-    //    'profile',
-    //    'raisehand',
-    //    'recording',
-    //    'security',
-    //    'select-background',
-    //    'settings',
-    //    'shareaudio',
-    //    'sharedvideo',
-    //    'shortcuts',
-    //    'stats',
-    //    'tileview',
-    //    'toggle-camera',
-    //    'videoquality',
-    //    'whiteboard',
-    // ],
+    toolbarButtons: [
+       'camera',
+       'chat',
+       'closedcaptions',
+       'desktop',
+       'download',
+       'embedmeeting',
+       'etherpad',
+       'feedback',
+       'filmstrip',
+       'fullscreen',
+       'hangup',
+       'help',
+       'highlight',
+       'linktosalesforce',
+       'livestreaming',
+       'microphone',
+       'noisesuppression',
+       'participants-pane',
+       'profile',
+       'raisehand',
+       'recording',
+       'security',
+       'select-background',
+       'settings',
+       'shareaudio',
+       'sharedvideo',
+       'shortcuts',
+       'stats',
+       'tileview',
+       'toggle-camera',
+       'videoquality',
+       'whiteboard',
+    ],
 
     // Holds values related to toolbar visibility control.
     // toolbarConfig: {
@@ -1834,7 +1833,7 @@ var config = {
     // },
 
     // Application logo url
-    // defaultLogoUrl: 'images/watermark.svg',
+    defaultLogoUrl: 'images/logo.png',
 
     // Settings for the Excalidraw whiteboard integration.
     // whiteboard: {

@@ -251,6 +251,12 @@ function getDevServerConfig() {
             }
         },
         host: '::',
+        headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+            'Surrogate-Control': 'no-store'
+        },
         hot: true,
         proxy: [
             {
@@ -267,9 +273,17 @@ function getDevServerConfig() {
         static: {
             directory: process.cwd(),
             watch: {
-                ignored: file => file.endsWith('.log')
+                ignored: [
+                    /node_modules/,
+                    /\.log$/
+                ]
             }
-        }
+        },
+        watchFiles: [
+            'images/*',
+            'config.js',
+            'interface_config.js'
+        ]
     };
 }
 
