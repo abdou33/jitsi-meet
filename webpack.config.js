@@ -12,7 +12,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
  * development with webpack-dev-server.
  */
 const devServerProxyTarget
-    = process.env.WEBPACK_DEV_SERVER_PROXY_TARGET || 'https://alpha.jitsi.net';
+    = process.env.WEBPACK_DEV_SERVER_PROXY_TARGET || 'https://10.97.78.215';
 
 /**
  * Build a Performance configuration object for the given size.
@@ -382,13 +382,23 @@ module.exports = (_env, argv) => {
                     './react/features/stream-effects/noise-suppression/NoiseSuppressorWorklet.ts'
             },
 
-            module: { rules: [
-                ...config.module.rules,
-                {
-                    test: resolve(__dirname, 'node_modules/webpack-dev-server/client'),
-                    loader: 'null-loader'
-                }
-            ] },
+            module: {
+                rules: [
+                    ...config.module.rules,
+
+                    // Ignore webpack-dev-server client as before
+                    {
+                        test: resolve(__dirname, 'node_modules/webpack-dev-server/client'),
+                        loader: 'null-loader'
+                    },
+
+                    // Add this rule to handle PNGs (and other image formats if needed)
+                    {
+                        test: /\.(png|jpe?g|gif)$/i,
+                        type: 'asset/resource'
+                    }
+                ]
+            },
             plugins: [
             ],
             performance: getPerformanceHints(perfHintOptions, 1024 * 1024 * 2),

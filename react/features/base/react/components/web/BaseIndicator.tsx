@@ -94,7 +94,7 @@ const BaseIndicator = ({
     if (iconSize) {
         style.fontSize = pixelsToRem(iconSize);
     }
-
+    return null;
     return (
         <div className = { styles.indicator }>
             <Tooltip

@@ -121,16 +121,23 @@ export default class AlwaysOnTop extends Component<any, IState> {
      */
     _videoChangedListener() {
         const userID = api._getOnStageParticipant();
-        const avatarURL = api.getAvatarURL(userID);
-        const displayName = api.getDisplayName(userID);
-        const formattedDisplayName = api._getFormattedDisplayName(userID);
-        const isVideoDisplayed = Boolean(api._getPrejoinVideo?.() || api._getLargeVideo());
+        // const avatarURL = api.getAvatarURL(userID);
+        // const displayName = api.getDisplayName(userID);
+        // const formattedDisplayName = api._getFormattedDisplayName(userID);
+        // const isVideoDisplayed = Boolean(api._getPrejoinVideo?.() || api._getLargeVideo());
 
+        // this.setState({
+        //     avatarURL,
+        //     displayName,
+        //     formattedDisplayName,
+        //     isVideoDisplayed,
+        //     userID
+        // });
         this.setState({
-            avatarURL,
-            displayName,
-            formattedDisplayName,
-            isVideoDisplayed,
+            avatarURL: 'images/logo.png', // force logo
+            displayName: api.getDisplayName(userID),
+            formattedDisplayName: api._getFormattedDisplayName(userID),
+            isVideoDisplayed: Boolean(api._getPrejoinVideo?.() || api._getLargeVideo()),
             userID
         });
     }
@@ -169,9 +176,9 @@ export default class AlwaysOnTop extends Component<any, IState> {
      */
     _renderVideoNotAvailableScreen() {
         const {
-            avatarURL,
-            customAvatarBackgrounds,
-            displayName,
+            // avatarURL,
+            // customAvatarBackgrounds,
+            // displayName,
             formattedDisplayName,
             isVideoDisplayed
         } = this.state;
@@ -181,18 +188,17 @@ export default class AlwaysOnTop extends Component<any, IState> {
         }
 
         return (
-            <div id = 'videoNotAvailableScreen'>
-                <div id = 'avatarContainer'>
+            <div id='videoNotAvailableScreen'>
+                <div id='avatarContainer'>
                     <StatelessAvatar
-                        color = { getAvatarColor(displayName, customAvatarBackgrounds) }
-                        iconUser = { DEFAULT_ICON.IconUser }
-                        id = 'avatar'
-                        initials = { getInitials(displayName) }
-                        url = { avatarURL } />)
+                        color='#FFFFFF'        // optional background
+                        iconUser={null}        // remove default icon
+                        id='avatar'
+                        initials=''            // no initials
+                        url='images/logo.png'  // force logo
+                    />
                 </div>
-                <div
-                    className = 'displayname'
-                    id = 'displayname'>
+                <div className='displayname' id='displayname'>
                     { formattedDisplayName }
                 </div>
             </div>

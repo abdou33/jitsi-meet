@@ -30,7 +30,7 @@ var config = {
 
     hosts: {
         // XMPP domain.
-        domain: 'jitsi-meet.example.com',
+        domain: '10.97.78.215',
 
         // When using authentication, domain for guest users.
         // anonymousdomain: 'guest.example.com',
@@ -42,14 +42,14 @@ var config = {
         // focus: 'focus.jitsi-meet.example.com',
 
         // XMPP MUC domain. FIXME: use XEP-0030 to discover it.
-        muc: 'conference.' + subdomain + 'jitsi-meet.example.com',
+        muc: 'conference.' + subdomain + '10.97.78.215',
     },
 
     // BOSH URL. FIXME: use XEP-0156 to discover it.
-    bosh: 'https://jitsi-meet.example.com/' + subdir + 'http-bind',
+    bosh: 'https://10.97.78.215/' + subdir + 'http-bind',
 
     // Websocket URL (XMPP)
-    websocket: 'wss://jitsi-meet.example.com/' + subdir + 'xmpp-websocket',
+    websocket: 'wss://10.97.78.215/' + subdir + 'xmpp-websocket',
 
     // websocketKeepAliveUrl: 'https://jitsi-meet.example.com/' + subdir + '_unlock',
 
@@ -541,88 +541,74 @@ var config = {
     // startLastN: 1,
 
     // Specify the settings for video quality optimizations on the client.
-    // videoQuality: {
-    //
-    //    // Provides a way to set the codec preference on desktop based endpoints.
-    //    codecPreferenceOrder: [ 'AV1', 'VP9', 'VP8', 'H264' ],
-    //
-    //    // Provides a way to set the codec for screenshare.
-    //    screenshareCodec: 'AV1',
-    //    mobileScreenshareCodec: 'VP8',
-    //
-    //    // Enables the adaptive mode in the client that will make runtime adjustments to selected codecs and received
-    //    // videos for a better user experience. This mode will kick in only when CPU overuse is reported in the
-    //    // WebRTC statistics for the outbound video streams.
-    //    enableAdaptiveMode: false,
-    //
-    //    // Codec specific settings for scalability modes and max bitrates.
-    //    av1: {
-    //      maxBitratesVideo: {
-    //          low: 100000,
-    //          standard: 300000,
-    //          high: 1000000,
-    //          fullHd: 2000000,
-    //          ultraHd: 4000000,
-    //          ssHigh: 2500000
-    //      },
-    //      scalabilityModeEnabled: true,
-    //      useSimulcast: false,
-    //      useKSVC: true
-    //    },
-    //    h264: {
-    //      maxBitratesVideo: {
-    //          low: 200000,
-    //          standard: 500000,
-    //          high: 1500000,
-    //          fullHd: 3000000,
-    //          ultraHd: 6000000,
-    //          ssHigh: 2500000
-    //      },
-    //      scalabilityModeEnabled: true
-    //    },
-    //    vp8: {
-    //      maxBitratesVideo: {
-    //          low: 200000,
-    //          standard: 500000,
-    //          high: 1500000,
-    //          fullHd: 3000000,
-    //          ultraHd: 6000000,
-    //          ssHigh: 2500000
-    //      },
-    //      scalabilityModeEnabled: false
-    //    },
-    //    vp9: {
-    //      maxBitratesVideo: {
-    //          low: 100000,
-    //          standard: 300000,
-    //          high: 1200000,
-    //          fullHd: 2500000,
-    //          ultraHd: 5000000,
-    //          ssHigh: 2500000
-    //      },
-    //      scalabilityModeEnabled: true,
-    //      useSimulcast: false,
-    //      useKSVC: true
-    //    },
-    //
-    //    // The options can be used to override default thresholds of video thumbnail heights corresponding to
-    //    // the video quality levels used in the application. At the time of this writing the allowed levels are:
-    //    //     'low' - for the low quality level (180p at the time of this writing)
-    //    //     'standard' - for the medium quality level (360p)
-    //    //     'high' - for the high quality level (720p)
-    //    // The keys should be positive numbers which represent the minimal thumbnail height for the quality level.
-    //    //
-    //    // With the default config value below the application will use 'low' quality until the thumbnails are
-    //    // at least 360 pixels tall. If the thumbnail height reaches 720 pixels then the application will switch to
-    //    // the high quality.
-    //    minHeightForQualityLvl: {
-    //        360: 'standard',
-    //        720: 'high',
-    //    },
-    //
-    //    // Provides a way to set the codec preference on mobile devices, both on RN and mobile browser based endpoint
-    //    mobileCodecPreferenceOrder: [ 'VP8', 'VP9', 'H264', 'AV1' ],
-    // },
+    videoQuality: {
+        // Codec preference order
+        codecPreferenceOrder: [ 'VP9', 'VP8', 'H264', 'AV1' ],
+
+        // Screenshare codec
+        screenshareCodec: 'VP9',
+
+        // Adaptive mode off (we control bitrates manually)
+        enableAdaptiveMode: false,
+
+        // Frame rate constraints
+        frameRate: { ideal: 24, max: 24 },
+
+        // Codec-specific settings
+        vp9: {
+            maxBitratesVideo: {
+                low: 200000,       // 180p ~120-200 kbps
+                standard: 450000,  // 360p ~400-500 kbps
+                high: 1200000      // 480p ~1.2 Mbps
+            },
+            scalabilityModeEnabled: true,   // allow spatial/temporal layers
+            useSimulcast: true,             // send multiple layers
+            useKSVC: true                   // keyframe scalable VP9
+        },
+        vp8: {
+            maxBitratesVideo: {
+                low: 200000,
+                standard: 500000,
+                high: 1500000
+            },
+            scalabilityModeEnabled: false
+        },
+        h264: {
+            maxBitratesVideo: {
+                low: 200000,
+                standard: 500000,
+                high: 1500000
+            },
+            scalabilityModeEnabled: true
+        },
+        av1: {
+            maxBitratesVideo: {
+                low: 100000,
+                standard: 300000,
+                high: 1000000
+            },
+            scalabilityModeEnabled: true,
+            useSimulcast: false,
+            useKSVC: true
+        },
+
+        // Thumbnail height thresholds
+        minHeightForQualityLvl: {
+            360: 'standard',
+            720: 'high'
+        },
+
+        // Mobile codec preference
+        mobileCodecPreferenceOrder: [ 'VP8', 'VP9', 'H264', 'AV1' ]
+    },
+
+    // Optional: outgoing max bitrate per layer for simulcast
+    simulcastConfig: {
+        low: { maxBitrate: 200000 },
+        standard: { maxBitrate: 450000 },
+        high: { maxBitrate: 1800000 }
+    },
+
 
     // Notification timeouts
     // notificationTimeouts: {
@@ -852,7 +838,7 @@ var config = {
     // - if `toolbarButtons` is undefined, we fallback to enabling all buttons on the UI
     toolbarButtons: [
        'camera',
-       'chat',
+    //    'chat',
        'closedcaptions',
        'desktop',
        'download',
@@ -1197,7 +1183,28 @@ var config = {
     // - 'RECORDING_OFF_SOUND'
     // - 'RECORDING_ON_SOUND'
     // - 'TALK_WHILE_MUTED_SOUND'
-    // disabledSounds: [],
+    disabledSounds: [
+        'ASKED_TO_UNMUTE_SOUND',
+        'E2EE_OFF_SOUND',
+        'E2EE_ON_SOUND',
+        'INCOMING_MSG_SOUND',
+        'KNOCKING_PARTICIPANT_SOUND',
+        'LIVE_STREAMING_OFF_SOUND',
+        'LIVE_STREAMING_ON_SOUND',
+        'NO_AUDIO_SIGNAL_SOUND',
+        'NOISY_AUDIO_INPUT_SOUND',
+        'OUTGOING_CALL_EXPIRED_SOUND',
+        'OUTGOING_CALL_REJECTED_SOUND',
+        'OUTGOING_CALL_RINGING_SOUND',
+        'OUTGOING_CALL_START_SOUND',
+        'PARTICIPANT_JOINED_SOUND',
+        'PARTICIPANT_LEFT_SOUND',
+        'RAISE_HAND_SOUND',
+        'REACTION_SOUND',
+        'RECORDING_OFF_SOUND',
+        'RECORDING_ON_SOUND',
+        'TALK_WHILE_MUTED_SOUND',
+    ],
 
     // DEPRECATED! Use `disabledSounds` instead.
     // Decides whether the start/stop recording audio notifications should play on record.
@@ -1500,33 +1507,33 @@ var config = {
 
     // Controls the visibility and behavior of the top header conference info labels.
     // If a label's id is not in any of the 2 arrays, it will not be visible at all on the header.
-    // conferenceInfo: {
-    //     // those labels will not be hidden in tandem with the toolbox.
-    //     alwaysVisible: ['recording', 'raised-hands-count'],
-    //     // those labels will be auto-hidden in tandem with the toolbox buttons.
-    //     autoHide: [
-    //         'subject',
-    //         'conference-timer',
-    //         'participants-count',
-    //         'e2ee',
-    //         'video-quality',
-    //         'insecure-room',
-    //         'highlight-moment',
-    //         'top-panel-toggle',
-    //     ]
-    // },
+    conferenceInfo: {
+        // those labels will not be hidden in tandem with the toolbox.
+        // 'video-quality',
+        alwaysVisible: ['recording', 'raised-hands-count'],
+        // those labels will be auto-hidden in tandem with the toolbox buttons.
+        autoHide: [
+            'subject',
+            'conference-timer',
+            'participants-count',
+            'e2ee',
+            'insecure-room',
+            'highlight-moment',
+            'top-panel-toggle',
+        ]
+    },
 
     // Hides the conference subject
     // hideConferenceSubject: false,
 
     // Hides the conference timer.
-    // hideConferenceTimer: false,
+    hideConferenceTimer: true,
 
     // Hides the recording label
     // hideRecordingLabel: false,
 
     // Hides the participants stats
-    // hideParticipantsStats: true,
+    hideParticipantsStats: true,
 
     // Sets the conference subject
     // subject: 'Conference Subject',
@@ -1673,85 +1680,9 @@ var config = {
 
         A falsy value for this prop will result in having all notifications enabled (e.g null, undefined, false)
     */
-    // notifications: [
-    //     'connection.CONNFAIL', // shown when the connection fails,
-    //     'dialog.cameraConstraintFailedError', // shown when the camera failed
-    //     'dialog.cameraNotSendingData', // shown when there's no feed from user's camera
-    //     'dialog.kickTitle', // shown when user has been kicked
-    //     'dialog.liveStreaming', // livestreaming notifications (pending, on, off, limits)
-    //     'dialog.lockTitle', // shown when setting conference password fails
-    //     'dialog.maxUsersLimitReached', // shown when maximmum users limit has been reached
-    //     'dialog.micNotSendingData', // shown when user's mic is not sending any audio
-    //     'dialog.passwordNotSupportedTitle', // shown when setting conference password fails due to password format
-    //     'dialog.recording', // recording notifications (pending, on, off, limits)
-    //     'dialog.remoteControlTitle', // remote control notifications (allowed, denied, start, stop, error)
-    //     'dialog.reservationError',
-    //     'dialog.screenSharingFailedTitle', // shown when the screen sharing failed
-    //     'dialog.serviceUnavailable', // shown when server is not reachable
-    //     'dialog.sessTerminated', // shown when there is a failed conference session
-    //     'dialog.sessionRestarted', // show when a client reload is initiated because of bridge migration
-    //     'dialog.tokenAuthFailed', // show when an invalid jwt is used
-    //     'dialog.tokenAuthFailedWithReasons', // show when an invalid jwt is used with the reason behind the error
-    //     'dialog.transcribing', // transcribing notifications (pending, off)
-    //     'dialOut.statusMessage', // shown when dial out status is updated.
-    //     'liveStreaming.busy', // shown when livestreaming service is busy
-    //     'liveStreaming.failedToStart', // shown when livestreaming fails to start
-    //     'liveStreaming.unavailableTitle', // shown when livestreaming service is not reachable
-    //     'lobby.joinRejectedMessage', // shown when while in a lobby, user's request to join is rejected
-    //     'lobby.notificationTitle', // shown when lobby is toggled and when join requests are allowed / denied
-    //     'notify.audioUnmuteBlockedTitle', // shown when mic unmute blocked
-    //     'notify.chatMessages', // shown when receiving chat messages while the chat window is closed
-    //     'notify.connectedOneMember', // show when a participant joined
-    //     'notify.connectedThreePlusMembers', // show when more than 2 participants joined simultaneously
-    //     'notify.connectedTwoMembers', // show when two participants joined simultaneously
-    //     'notify.dataChannelClosed', // shown when the bridge channel has been disconnected
-    //     'notify.hostAskedUnmute', // shown to participant when host asks them to unmute
-    //     'notify.invitedOneMember', // shown when 1 participant has been invited
-    //     'notify.invitedThreePlusMembers', // shown when 3+ participants have been invited
-    //     'notify.invitedTwoMembers', // shown when 2 participants have been invited
-    //     'notify.kickParticipant', // shown when a participant is kicked
-    //     'notify.leftOneMember', // show when a participant left
-    //     'notify.leftThreePlusMembers', // show when more than 2 participants left simultaneously
-    //     'notify.leftTwoMembers', // show when two participants left simultaneously
-    //     'notify.linkToSalesforce', // shown when joining a meeting with salesforce integration
-    //     'notify.localRecordingStarted', // shown when the local recording has been started
-    //     'notify.localRecordingStopped', // shown when the local recording has been stopped
-    //     'notify.moderationInEffectCSTitle', // shown when user attempts to share content during AV moderation
-    //     'notify.moderationInEffectTitle', // shown when user attempts to unmute audio during AV moderation
-    //     'notify.moderationInEffectVideoTitle', // shown when user attempts to enable video during AV moderation
-    //     'notify.moderator', // shown when user gets moderator privilege
-    //     'notify.mutedRemotelyTitle', // shown when user is muted by a remote party
-    //     'notify.mutedTitle', // shown when user has been muted upon joining,
-    //     'notify.newDeviceAudioTitle', // prompts the user to use a newly detected audio device
-    //     'notify.newDeviceCameraTitle', // prompts the user to use a newly detected camera
-    //     'notify.noiseSuppressionFailedTitle', // shown when failed to start noise suppression
-    //     'notify.participantWantsToJoin', // shown when lobby is enabled and participant requests to join meeting
-    //     'notify.participantsWantToJoin', // shown when lobby is enabled and participants request to join meeting
-    //     'notify.passwordRemovedRemotely', // shown when a password has been removed remotely
-    //     'notify.passwordSetRemotely', // shown when a password has been set remotely
-    //     'notify.raisedHand', // shown when a participant used raise hand,
-    //     'notify.screenShareNoAudio', // shown when the audio could not be shared for the selected screen
-    //     'notify.screenSharingAudioOnlyTitle', // shown when the best performance has been affected by screen sharing
-    //     'notify.selfViewTitle', // show "You can always un-hide the self-view from settings"
-    //     'notify.startSilentTitle', // shown when user joined with no audio
-    //     'notify.suboptimalExperienceTitle', // show the browser warning
-    //     'notify.unmute', // shown to moderator when user raises hand during AV moderation
-    //     'notify.videoMutedRemotelyTitle', // shown when user's video is muted by a remote party,
-    //     'notify.videoUnmuteBlockedTitle', // shown when camera unmute and desktop sharing are blocked
-    //     'prejoin.errorDialOut',
-    //     'prejoin.errorDialOutDisconnected',
-    //     'prejoin.errorDialOutFailed',
-    //     'prejoin.errorDialOutStatus',
-    //     'prejoin.errorStatusCode',
-    //     'prejoin.errorValidation',
-    //     'recording.busy', // shown when recording service is busy
-    //     'recording.failedToStart', // shown when recording fails to start
-    //     'recording.unavailableTitle', // shown when recording service is not reachable
-    //     'toolbar.noAudioSignalTitle', // shown when a broken mic is detected
-    //     'toolbar.noisyAudioInputTitle', // shown when noise is detected for the current microphone
-    //     'toolbar.talkWhileMutedPopup', // shown when user tries to speak while muted
-    //     'transcribing.failed', // shown when transcribing fails
-    // ],
+    notifications: [],
+
+    disableNotifications: true,
 
     // List of notifications to be disabled. Works in tandem with the above setting.
     // disabledNotifications: [],

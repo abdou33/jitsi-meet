@@ -239,9 +239,22 @@ class Avatar<P extends IProps> extends PureComponent<P, IState> {
             avatarProps.iconUser = defaultIcon;
         }
 
+        // return (
+        //     <StatelessAvatar
+        //         { ...avatarProps } />
+        // );
+        // Always show your PNG logo
         return (
-            <StatelessAvatar
-                { ...avatarProps } />
+            <img
+                src = "/images/logo.png"   // put your PNG in /images or /static
+                alt = "App Logo"
+                style = {{
+                    width: this.props.size || 65,
+                    height: this.props.size || 65,
+                    borderRadius: '50%',
+                    objectFit: 'cover'
+                }}
+            />
         );
     }
 

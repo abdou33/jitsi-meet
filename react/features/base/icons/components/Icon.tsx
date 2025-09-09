@@ -118,7 +118,7 @@ interface IProps extends IIconProps {
     testId?: string;
 }
 
-export const DEFAULT_COLOR = navigator.product === 'ReactNative' ? 'white' : undefined;
+export const DEFAULT_COLOR = navigator.product === 'ReactNative' ? 'green' : undefined;
 export const DEFAULT_SIZE = navigator.product === 'ReactNative' ? 36 : 22;
 
 /**

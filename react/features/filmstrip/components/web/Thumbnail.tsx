@@ -304,7 +304,7 @@ const defaultStyles = (theme: Theme) => {
             left: 0,
             height: '100%',
             width: '100%',
-            borderRadius: '4px',
+            borderRadius: '15px',
             backgroundColor: theme.palette.ui02
         },
 

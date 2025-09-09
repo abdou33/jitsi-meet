@@ -45,6 +45,7 @@ const VideoQualityLabel = () => {
 
     const onClick = () => dispatch(openDialog(VideoQualityDialog));
 
+    return null;
     return (
         <Tooltip
             content = { t(tooltipKey) }

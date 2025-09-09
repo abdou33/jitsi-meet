@@ -90,7 +90,7 @@ import { default as IconSubtitles } from './subtitles.svg';
 import { default as IconTileView } from './tile-view.svg';
 import { default as IconTrash } from './trash.svg';
 import { default as IconUserDeleted } from './user-deleted.svg';
-import { default as IconUser } from './user.svg';
+import { default as IconUser } from './avatar2.svg';
 import { default as IconUsers } from './users.svg';
 import { default as IconVideoOff } from './video-off.svg';
 import { default as IconVideo } from './video.svg';
